@@ -57,7 +57,7 @@ class OCR(object):
         
             
     
-    def extract(self,img,batch_size=32,debug=False):
+    def extract(self,img,batch_size=32,debug=False,rf=5):
         '''
             predict based on datatype
             args:
@@ -67,6 +67,18 @@ class OCR(object):
         if type(img)==str:
             img=cv2.imread(img)
         img=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+        img,_=padDetectionImage(img)
+        h,w,d=img.shape
+        #img=cv2.resize(img,(rf*h,rf*w))
+        img=remove_shadows(img)
+        img_t=threshold_image(img,True)
+        img[img_t==255]=(255,255,255)
+        #img=cv2.merge((img,img,img))
+        img=enhance_contrast(img)
+        
+        if debug:
+            plt.imshow(img)
+            plt.show()
         # detect
         boxes,crops=self.craft.detect(img,debug=debug)
         # recognize

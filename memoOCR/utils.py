@@ -110,6 +110,16 @@ def threshold_image(img,blur):
         img = cv2.GaussianBlur(img,(5,5),0)
     _,img = cv2.threshold(img,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
     return img
+
+def enhance_contrast(img,factor=10):
+    '''
+        enhances contrast
+    '''
+    img=Image.fromarray(img)
+    img=ImageEnhance.Contrast(img)
+    img=img.enhance(factor)
+    img=np.array(img)
+    return img
 #---------------------------------------------------------------
 # detection utils
 #---------------------------------------------------------------

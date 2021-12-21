@@ -45,7 +45,6 @@ class CRAFT(BaseDetector):
         args:
             img  : rgb image
         '''
-        img,_=padDetectionImage(img)
         org_h,org_w,_=img.shape
         data=cv2.resize(img,(self.img_dim[1],self.img_dim[0]))
         # predict
